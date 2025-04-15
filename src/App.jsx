@@ -36,7 +36,9 @@ const App = () => {
       });
 
       const data = await res.json();
-      const aiRawContent = data.choices?.[0]?.message?.content || "No response";
+      console.log(import.meta.env.VITE_OPEN_AI_API_KEY);
+      const aiRawContent =
+        data.choices?.[0]?.message?.content || data?.error?.message;
       const cleanedContent = cleanMarkdown(aiRawContent);
       const aiMessage = {
         role: "assistant",
@@ -100,7 +102,7 @@ const App = () => {
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
               onKeyDown={(e) => {
-                if (e.key === "Enter") query();
+                if (e.key === "Enter") chatBot();
               }}
             />
             <button className="text-white px-4 py-2" onClick={chatBot}>
